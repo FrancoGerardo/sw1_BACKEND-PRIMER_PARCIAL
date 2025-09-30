@@ -191,7 +191,7 @@ async def enter_sala(request: Request, tokenS: str, db: Session = Depends(get_db
     # Redirigir al frontend con el token
     # frontend_url = os.getenv("FRONTEND_URL", "http://localhost:8081") + f"/model-UML?room={tokenS}&username={user.tokenU}"
     # frontend_url = os.getenv("FRONTEND_URL", "https://tu-frontend.railway.app") + f"/model-UML?room={tokenS}&username={user.tokenU}"
-    frontend_url = os.getenv("FRONTEND_URL", "https://sw1frontend-primerparcial-production.up.railway.app") + f"/model-UML?room={tokenS}&username={user.tokenU}"
+    frontend_url = f"https://sw1frontend-primerparcial-production.up.railway.app/model-UML?room={tokenS}&username={user.tokenU}"
     return RedirectResponse(url=frontend_url, status_code=status.HTTP_302_FOUND)
 
 # Ruta para compartir sala
