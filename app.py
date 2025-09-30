@@ -69,6 +69,12 @@ async def require_no_auth(request: Request):
             detail="Ya estás autenticado"
         )
 
+# Ruta de prueba
+@app.get("/test")
+async def test():
+    """Ruta de prueba"""
+    return {"message": "Backend funcionando correctamente", "status": "ok"}
+
 # Ruta raíz
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request, db: Session = Depends(get_db)):
