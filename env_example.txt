@@ -17,4 +17,4 @@ HOST=0.0.0.0
 PORT=8000
 
 # URL del frontend (para producción)
-FRONTEND_URL=http://localhost:8081
+FRONTEND_URL=https://sw1frontend-primerparcial-production.up.railway.app
