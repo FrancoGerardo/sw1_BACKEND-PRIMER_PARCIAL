@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 p-6">
+  <div class="max-w-6xl mx-auto">
+    
+    <!-- Header -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+      <h1 class="text-2xl font-bold text-gray-800 mb-2">Salas Compartidas</h1>
+      <p class="text-gray-600">Estas son las salas que otros usuarios han compartido contigo</p>
+    </div>
+
+    <!-- Lista de salas compartidas -->
+    {% if salas %}
+    <div class="grid md:grid-cols-3 gap-6">
+      {% for sala in salas %}
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        
+        <!-- Imagen de prueba SVG difuminado con título clicable -->
+        <a href="/salas/inSala/{{ sala.tokenS }}" target="_blank" class="block">
+          <div class="relative bg-gray-50 p-4 flex justify-center items-center">
+            <svg class="w-full h-48 rounded-md border border-gray-200" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 400 200">
+              <defs>
+                <linearGradient id="grad{{ sala.id }}" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3" />
+                  <stop offset="100%" style="stop-color:#34d399;stop-opacity:0.3" />
+                </linearGradient>
+              </defs>
+              <rect width="400" height="200" fill="url(#grad{{ sala.id }})" rx="12" />
+            </svg>
+            <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+              <h3 class="text-green-600 font-semibold text-sm flex items-center gap-2">
+                <i class="bx bx-book-content text-lg"></i> {{ sala.title }}
+              </h3>
+            </div>
+          </div>
+        </a>
+
+        <!-- Contenido -->
+        <div class="p-4 space-y-2 text-center">
+
+          <!-- Descripción -->
+          <p class="text-gray-700 text-xs truncate">{{ sala.description }}</p>
+
+          <!-- Fecha -->
+          <p class="text-gray-400 text-xs">{{ sala.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
+
+          <!-- Botón para entrar -->
+          <div class="flex justify-center mt-3">
+            <a href="/salas/inSala/{{ sala.tokenS }}" target="_blank"
+              class="flex items-center justify-center gap-1 bg-green-600 hover:bg-green-700 text-white text-xs font-medium py-2 px-4 rounded-lg shadow transition">
+              <i class="bx bx-log-in"></i> Entrar a la Sala
+            </a>
+          </div>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+      <i class="bx bx-share-alt text-6xl text-gray-400 mb-4"></i>
+      <h2 class="text-xl font-semibold text-gray-800 mb-2">No hay salas compartidas</h2>
+      <p class="text-gray-600 mb-4">Aún no tienes acceso a ninguna sala compartida por otros usuarios.</p>
+      <a href="/salas"
+        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg shadow transition">
+        <i class="bx bx-plus"></i> Ver Mis Salas
+      </a>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

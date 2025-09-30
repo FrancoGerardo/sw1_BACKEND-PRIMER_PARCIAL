@@ -1,0 +1,59 @@
+<!-- Contenedor de notificaciones -->
+<div id="toast-container" class="fixed bottom-4 right-4 flex flex-col gap-2 z-50"></div>
+
+<script>
+  // Función para mostrar alerta
+  function showToast(message, type = 'success') {
+    const colors = {
+      success: 'bg-green-100 border-green-400 text-green-700',
+      error: 'bg-red-100 border-red-400 text-red-700'
+    };
+    const icons = {
+      success: 'bx-check-circle',
+      error: 'bx-error-circle'
+    };
+    const toast = document.createElement('div');
+    toast.className = `flex items-center gap-3 px-4 py-3 rounded-lg shadow border ${colors[type]} animate-slideIn`;
+    toast.innerHTML = `
+      <i class="bx ${icons[type]} text-xl"></i>
+      <span class="flex-1 text-sm">${message}</span>
+      <button type="button" class="hover:text-opacity-80 text-current">
+        <i class="bx bx-x text-lg"></i>
+      </button>
+    `;
+    toast.querySelector('button').onclick = () => toast.remove();
+    document.getElementById('toast-container').appendChild(toast);
+
+    // Desaparece después de 4 segundos
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'transition', 'duration-500');
+      setTimeout(() => toast.remove(), 500);
+    }, 4000);
+  }
+
+  // Mostrar si existe success o message
+  {% if success %}
+  showToast("{{ success }}", 'success');
+  {% endif %}
+  {% if message %}
+  showToast("{{ message }}", 'error');
+  {% endif %}
+</script>
+
+<style>
+  @keyframes slideIn {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-slideIn {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+</style>

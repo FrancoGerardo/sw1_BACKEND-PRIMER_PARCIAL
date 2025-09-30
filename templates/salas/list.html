@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 p-6">
+  <div class="grid md:grid-cols-3 gap-6">
+
+    {% for sala in salas %}
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+
+      <!-- Imagen de prueba SVG difuminado con título clicable -->
+      <a href="/salas/inSala/{{ sala.tokenS }}" target="_blank" class="block">
+        <div class="relative bg-gray-50 p-4 flex justify-center items-center">
+          <svg class="w-full h-48 rounded-md border border-gray-200" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 400 200">
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3" />
+                <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:0.3" />
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#grad)" rx="12" />
+          </svg>
+          <div class="absolute inset-0 flex justify-center items-center pointer-events-none">
+            <h3 class="text-blue-600 font-semibold text-sm flex items-center gap-2">
+              <i class="bx bx-book-content text-lg"></i> {{ sala.title }}
+            </h3>
+          </div>
+        </div>
+      </a>
+
+      <!-- Contenido -->
+      <div class="p-4 space-y-2 text-center">
+
+        <!-- Descripción -->
+        <p class="text-gray-700 text-xs truncate">{{ sala.description }}</p>
+
+        <!-- Fecha -->
+        <p class="text-gray-400 text-xs">{{ sala.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
+
+        <!-- Botones en fila -->
+        <div class="flex justify-center flex-wrap gap-2 mt-3">
+          <a href="/salas/listUsuarios/{{ sala.id }}"
+            class="flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium py-1 px-2 rounded-lg shadow transition">
+            <i class="bx bx-share-alt"></i> Compartir
+          </a>
+
+          <a href="/salas/edit/{{ sala.id }}"
+            class="flex items-center justify-center gap-1 bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium py-1 px-2 rounded-lg shadow transition">
+            <i class="bx bx-edit-alt"></i> Editar
+          </a>
+
+          <a href="/salas/delete/{{ sala.id }}"
+            class="flex items-center justify-center gap-1 bg-red-600 hover:bg-red-700 text-white text-xs font-medium py-1 px-2 rounded-lg shadow transition">
+            <i class="bx bx-trash"></i> Eliminar
+          </a>
+        </div>
+
+      </div>
+    </div>
+    {% else %}
+    <div class="col-span-3 mx-auto bg-white rounded-xl shadow p-6 text-center">
+      <p class="text-gray-600 mb-3">No hay ninguna sala para este usuario.</p>
+      <a href="/salas/add"
+        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg shadow transition">
+        <i class="bx bx-plus"></i> Crea Uno!
+      </a>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+{% endblock %}

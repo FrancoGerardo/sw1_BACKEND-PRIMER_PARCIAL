@@ -1,0 +1,154 @@
+<nav class="bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg" aria-label="Navegación principal">
+  <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 text-white font-bold text-xl">
+      <i class="bx bx-shape-circle text-2xl"></i>
+      Salas UML
+    </a>
+
+    <!-- Botón Hamburguesa Mejorado -->
+    <button id="menu-toggle"
+      class="lg:hidden flex flex-col justify-center items-center w-10 h-10 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 rounded-md transition-all duration-300"
+      aria-expanded="false" aria-label="Menú de navegación">
+      <span class="bg-white block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 menu-line-1"></span>
+      <span class="bg-white block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 menu-line-2"></span>
+      <span class="bg-white block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 menu-line-3"></span>
+    </button>
+
+    <!-- Menú de Navegación Mejorado -->
+    <div id="menu"
+      class="hidden lg:flex flex-col lg:flex-row lg:items-center lg:gap-6 mt-4 lg:mt-0 bg-blue-700 lg:bg-transparent rounded-xl p-4 lg:p-0 shadow-lg lg:shadow-none transition-all duration-300 ease-in-out">
+      <ul class="flex flex-col lg:flex-row gap-4 lg:gap-6 text-white font-medium">
+        {% if user %}
+        <!-- Dropdown Salas Mejorado -->
+        <li class="relative group" x-data="{ open: true }">
+          <button
+            class="flex items-center gap-1 hover:text-yellow-300 py-2 transition-colors duration-200 rounded-md px-3"
+            @click="open = !open" @keydown.escape="open = false" aria-expanded="false" aria-haspopup="true"
+            id="salas-dropdown-button">
+            <i class="bx bx-layout"></i> Salas
+            <i class="bx bx-chevron-down transition-transform duration-200 group-hover:rotate-180"></i>
+          </button>
+          <ul
+            class="absolute left-0 mt-2 hidden group-hover:lg:block bg-white text-gray-700 rounded-lg shadow-xl w-48 py-2 z-50 border border-gray-100 transition-all duration-300 origin-top"
+            :class="{'hidden': !open, 'block': open}" @click.outside="open = false"
+            aria-labelledby="salas-dropdown-button" role="menu">
+            <li role="none">
+              <a href="/salas" class="block px-4 py-2 hover:bg-blue-50 transition-colors duration-200 flex items-center"
+                role="menuitem">
+                <i class="bx bx-list-ul mr-2"></i>Mis Salas
+              </a>
+            </li>
+            <li role="none">
+              <hr class="border-gray-200 my-1">
+            </li>
+            <li role="none">
+              <a href="/salas/add"
+                class="block px-4 py-2 hover:bg-blue-50 transition-colors duration-200 flex items-center"
+                role="menuitem">
+                <i class="bx bx-plus-circle mr-2"></i>Añadir Sala
+              </a>
+            </li>
+            <li role="none">
+              <a href="/salas/salasCompartidas"
+                class="block px-4 py-2 hover:bg-blue-50 transition-colors duration-200 flex items-center"
+                role="menuitem">
+                <i class="bx bx-share-alt mr-2"></i>Salas Compartidas
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="/profile"
+            class="hover:text-yellow-300 flex items-center gap-1 py-2 transition-colors duration-200 rounded-md px-3"
+            aria-label="Mi perfil">
+            <i class="bx bx-user"></i> Perfil
+          </a>
+        </li>
+        <li>
+          <a href="/logout"
+            class="hover:text-yellow-300 flex items-center gap-1 py-2 transition-colors duration-200 rounded-md px-3"
+            aria-label="Cerrar sesión">
+            <i class="bx bx-log-out"></i> Cerrar Sesión
+          </a>
+        </li>
+        {% else %}
+        <li>
+          <a href="/signin"
+            class="hover:text-yellow-300 flex items-center gap-1 py-2 transition-colors duration-200 rounded-md px-3"
+            aria-label="Iniciar sesión">
+            <i class="bx bx-log-in"></i> Iniciar Sesión
+          </a>
+        </li>
+        <li>
+          <a href="/signup"
+            class="hover:text-yellow-300 flex items-center gap-1 py-2 transition-colors duration-200 rounded-md px-3"
+            aria-label="Registrarse">
+            <i class="bx bx-user-plus"></i> Registrarse
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    const menuLines = document.querySelectorAll('.menu-line-1, .menu-line-2, .menu-line-3');
+
+    // Función para alternar el menú
+    function toggleMenu() {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', !isExpanded);
+      menu.classList.toggle('hidden');
+
+      // Animación del icono hamburguesa a X
+      if (!menu.classList.contains('hidden')) {
+        menuLines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        menuLines[1].style.opacity = '0';
+        menuLines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+      } else {
+        menuLines[0].style.transform = 'none';
+        menuLines[1].style.opacity = '1';
+        menuLines[2].style.transform = 'none';
+      }
+    }
+
+    // Cerrar menú al hacer clic fuera de él
+    function closeMenuOnClickOutside(event) {
+      if (!menu.classList.contains('hidden') &&
+        !menu.contains(event.target) &&
+        !toggleBtn.contains(event.target)) {
+        toggleMenu();
+      }
+    }
+
+    // Event listeners
+    toggleBtn.addEventListener('click', toggleMenu);
+    document.addEventListener('click', closeMenuOnClickOutside);
+
+    // Cerrar menú al presionar la tecla Escape
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
+        toggleMenu();
+      }
+    });
+
+    // Mejorar el manejo del dropdown en dispositivos móviles
+    const dropdownButton = document.getElementById('salas-dropdown-button');
+    if (dropdownButton) {
+      dropdownButton.addEventListener('click', function () {
+        if (window.innerWidth < 1024) {
+          const dropdown = this.nextElementSibling;
+          dropdown.classList.toggle('hidden');
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !isExpanded);
+        }
+      });
+    }
+  });
+</script>

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 p-6">
+  <div class="max-w-5xl mx-auto space-y-6">
+
+    <!-- Formulario para compartir sala -->
+    <form action="/api/salas/share/{{idSala}}" method="POST"
+      class="bg-white rounded-xl shadow p-4 flex flex-col md:flex-row gap-4 items-center">
+
+      <div class="flex-1 relative w-full">
+        <i class="bx bx-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <select name="idUsuario" id="select-users"
+          class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+          onchange="habilitar()">
+          <option value="nulo">Seleccione un USUARIO</option>
+          {% for user in users %}
+          <option value="{{user.id}}">{{user.username}}, {{user.correo}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="submit"
+        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg shadow transition">
+        <i class="bx bx-share-alt"></i> Compartir
+      </button>
+    </form>
+
+    <!-- Listado de usuarios -->
+    <div class="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+      {% for user in users %}
+      <div
+        class="bg-white rounded-xl shadow hover:scale-105 transform transition duration-300 p-4 flex flex-col items-center text-center">
+
+        <!-- Avatar -->
+        <div class="w-16 h-16 mb-2">
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/020/911/729/non_2x/profile-icon-avatar-icon-user-icon-person-icon-free-png.png"
+            alt="{{user.username}}" class="w-full h-full rounded-full border border-gray-200 object-cover">
+        </div>
+
+        <!-- Nombre y correo -->
+        <h3 class="text-blue-600 font-semibold text-sm flex items-center gap-1">
+          <i class="bx bx-user-circle text-lg"></i> {{user.username}}
+        </h3>
+        <p class="text-gray-700 text-xs truncate">{{user.correo}}</p>
+
+        <!-- Botones -->
+        <div class="flex gap-2 mt-3 flex-wrap justify-center w-full">
+          <a href="/salas/listUsuarios/{{user.id}}"
+            class="flex items-center justify-center gap-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium py-1 px-2 rounded-lg shadow transition">
+            <i class="bx bx-share-alt"></i> Compartir
+          </a>
+
+          <a href="/salas/edit/{{user.id}}"
+            class="flex items-center justify-center gap-1 bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium py-1 px-2 rounded-lg shadow transition">
+            <i class="bx bx-edit-alt"></i> Editar
+          </a>
+
+          <a href="/salas/delete/{{user.id}}"
+            class="flex items-center justify-center gap-1 bg-red-600 hover:bg-red-700 text-white text-xs font-medium py-1 px-2 rounded-lg shadow transition">
+            <i class="bx bx-trash"></i> Eliminar
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-span-3 mx-auto bg-white rounded-xl shadow p-6 text-center">
+        <p class="text-gray-600 mb-3">No hay usuarios disponibles.</p>
+        <a href="/salas/add"
+          class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-lg shadow transition">
+          <i class="bx bx-plus"></i> Crea Uno!
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+function habilitar() {
+    const select = document.getElementById('select-users');
+    const button = document.querySelector('button[type="submit"]');
+    if (select.value !== 'nulo') {
+        button.disabled = false;
+    } else {
+        button.disabled = true;
+    }
+}
+</script>
+{% endblock %}

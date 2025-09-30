@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="index">
+  <!-- Hero / Encabezado -->
+  <header class="relative bg-gradient-to-r from-blue-800 via-blue-700 to-blue-600 min-h-screen flex items-center">
+    <div class="absolute inset-0 bg-black/40"></div> <!-- Overlay -->
+
+    <div class="relative container mx-auto px-6 text-center text-white z-10">
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in">
+        Diagramas de Clases UML
+      </h1>
+      <h2 class="text-lg md:text-2xl mb-8 font-light animate-slide-up">
+        <em>Diseña, automatiza y lleva tus proyectos al siguiente nivel</em>
+      </h2>
+      <a href="/signin"
+        class="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-opacity-75">
+        <i class="bx bx-log-in text-2xl" aria-hidden="true"></i>
+        Iniciar Sesión
+      </a>
+    </div>
+
+    <!-- Indicador de scroll (solo visible en desktop) -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden md:block animate-bounce">
+      <i class="bx bx-chevron-down text-3xl text-white opacity-70" aria-hidden="true"></i>
+      <span class="sr-only">Desplazarse hacia abajo</span>
+    </div>
+  </header>
+
+  <!-- Beneficios del Software -->
+  <section class="py-20 bg-gray-50" aria-labelledby="caracteristicas-principales">
+    <div class="container mx-auto px-6 text-center">
+      <h2 id="caracteristicas-principales" class="text-3xl md:text-4xl font-bold text-gray-800 mb-16">
+        Características Principales
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
+
+        <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 group">
+          <div class="flex justify-center">
+            <i class="bx bx-shape-square text-blue-500 text-6xl mb-6 group-hover:text-blue-600 transition-colors"
+              aria-hidden="true"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Diagramas Profesionales</h3>
+          <p class="text-gray-600 mb-4">Crea diagramas de clases con una interfaz intuitiva y moderna.</p>
+          <span class="text-xl font-bold text-gray-800">Desde $19/mes</span>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 group">
+          <div class="flex justify-center">
+            <i class="bx bx-code-curly text-green-500 text-6xl mb-6 group-hover:text-green-600 transition-colors"
+              aria-hidden="true"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Generación de Código</h3>
+          <p class="text-gray-600 mb-4">Transforma tus diagramas en código listo para backend y frontend.</p>
+          <span class="text-xl font-bold text-gray-800">Incluido en todos los planes</span>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 group">
+          <div class="flex justify-center">
+            <i class="bx bx-cloud-upload text-purple-500 text-6xl mb-6 group-hover:text-purple-600 transition-colors"
+              aria-hidden="true"></i>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Almacenamiento en la Nube</h3>
+          <p class="text-gray-600 mb-4">Guarda, comparte y colabora en tus proyectos desde cualquier lugar.</p>
+          <span class="text-xl font-bold text-gray-800">Acceso ilimitado</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+  /* Animaciones mejoradas */
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out 0.3s both;
+  }
+
+  .animate-bounce {
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0) translateX(-50%);
+    }
+
+    40% {
+      transform: translateY(-20px) translateX(-50%);
+    }
+
+    60% {
+      transform: translateY(-10px) translateX(-50%);
+    }
+  }
+
+  /* Mejoras de accesibilidad para enfoque */
+  .focus\:ring-2:focus {
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.5);
+  }
+</style>
+{% endblock %}
